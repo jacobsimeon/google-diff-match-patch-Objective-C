@@ -21,10 +21,7 @@
  */
 
 #import "DiffMatchPatchTest.h"
-
 #import "DiffMatchPatch.h"
-#import "NSMutableDictionary+DMPExtensions.h"
-#import "JXArcCompatibilityMacros.h"
 
 #define stringForBOOL(A)  ([((NSNumber *)A) boolValue] ? @"true" : @"false")
 

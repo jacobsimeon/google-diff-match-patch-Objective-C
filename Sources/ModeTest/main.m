@@ -22,9 +22,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <DiffMatchPatch/DiffMatchPatch.h>
+#import "DiffMatchPatch.h"
 #import "TestUtilities.h"
-#import "JXArcCompatibilityMacros.h"
 
 
 typedef enum {

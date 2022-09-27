@@ -21,6 +21,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "JXArcCompatibilityMacros.h"
+#import "NSMutableDictionary+DMPExtensions.h"
 
 /*
  * Functions for diff, match and patch.

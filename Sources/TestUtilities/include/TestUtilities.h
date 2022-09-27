@@ -22,5 +22,6 @@
 
 #import <Cocoa/Cocoa.h>
 
+NSString * diff_stringForResourceFilePath(NSString *aResourceFilePath);
 NSString * diff_stringForFilePath(NSString *aFilePath);
 NSString * diff_stringForURL(NSURL *aURL);

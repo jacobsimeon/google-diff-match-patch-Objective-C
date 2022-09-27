@@ -22,11 +22,19 @@
 
 #import <Foundation/Foundation.h>
 
-#import <DiffMatchPatch/DiffMatchPatch.h>
+#import "DiffMatchPatch.h"
 #import "TestUtilities.h"
-#import "JXArcCompatibilityMacros.h"
 
+NSString * diff_stringForBundleResource(NSString *resourceName);
 void diff_measureTimeForDiff(DiffMatchPatch *dmp, NSString *text1, NSString *text2, NSString *aDescription);
+
+NSString * diff_stringForBundleResource(NSString *resourceName) {
+  NSURL *moduleBundleURL = [NSBundle.mainBundle.bundleURL URLByAppendingPathComponent:@"DiffMatchPatch_SpeedTest.bundle"];
+  NSBundle *moduleBundle = [NSBundle bundleWithURL:moduleBundleURL];
+  NSURL *resourceURL = [moduleBundle URLForResource:resourceName withExtension:nil subdirectory:nil];
+
+  return diff_stringForURL(resourceURL);
+}
 
 void diff_measureTimeForDiff(DiffMatchPatch *dmp, NSString *text1, NSString *text2, NSString *aDescription) {
   NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
@@ -39,18 +47,17 @@ void diff_measureTimeForDiff(DiffMatchPatch *dmp, NSString *text1, NSString *tex
 int main (int argc, const char * argv[]) {
   JX_NEW_AUTORELEASE_POOL_WITH_NAME(pool)
 
-  NSString *text1FilePath = @"Speedtest1.txt";
-  NSString *text2FilePath = @"Speedtest2.txt";
+  NSString *text1;
+  NSString *text2;
 
   NSArray *cliArguments = [[NSProcessInfo processInfo] arguments];
-  
   if ([cliArguments count] == 3) {
-    text1FilePath = [cliArguments objectAtIndex:1];
-    text2FilePath = [cliArguments objectAtIndex:2];
+    text1 = diff_stringForFilePath(cliArguments[1]);
+    text2 = diff_stringForFilePath(cliArguments[2]);
+  } else {
+    text1 = diff_stringForBundleResource(@"Speedtest1.txt");
+    text2 = diff_stringForBundleResource(@"Speedtest2.txt");
   }
-
-  NSString *text1 = diff_stringForFilePath(text1FilePath);
-  NSString *text2 = diff_stringForFilePath(text2FilePath);
 
   DiffMatchPatch *dmp = [DiffMatchPatch new];
   dmp.Diff_Timeout = 0;

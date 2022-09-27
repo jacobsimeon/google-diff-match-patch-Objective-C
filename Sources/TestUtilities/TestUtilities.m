@@ -46,22 +46,5 @@ NSString * diff_stringForFilePath(NSString *aFilePath) {
 }
 
 NSString * diff_stringForURL(NSURL *aURL) {
-  NSDictionary *documentOptions = [NSDictionary dictionary];
-  NSDictionary *documentAttributes;
-  NSError *error;
-  NSAttributedString *attributedString = [[NSAttributedString alloc]
-                                          initWithURL:aURL
-                                          options:documentOptions
-                                          documentAttributes:&documentAttributes error:&error];
-  if (!attributedString) {
-    NSLog(@"%@", error);
-  }
-  
-  // For performance reasons, NSAttributedString’s -string method returns the current backing store of the attributed string object. 
-  // We need to make a copy or we will get a zombie soon after releasing attributedString below. 
-  NSString *string = JX_AUTORELEASE([[attributedString string] copy]);
-  
-  JX_RELEASE(attributedString);
-  
-  return string;
+  return [NSString stringWithContentsOfURL:aURL encoding:NSUTF8StringEncoding error:nil];
 }
